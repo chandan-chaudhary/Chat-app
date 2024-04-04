@@ -6,7 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 
 function App() {
-    const user = false;
+    const user = true;
   return (
       <BrowserRouter>
         <Routes>

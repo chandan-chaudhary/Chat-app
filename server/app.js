@@ -7,7 +7,10 @@ const cookieParser = require('cookie-parser');
 
 
 // OWN ROUTES
-const userRouter = require('./routes/userRoutes')
+const authRoute = require('./routes/authRoutes');
+const userRoute = require('./routes/userRoutes')
+const messageRoute = require('./routes/messageRoutes');
+
 
 const app = express();
 
@@ -22,11 +25,15 @@ app.use((req, res, next)=>{
     next();
 });
 
-app.use('/api/user', userRouter);
+// ROUTES
+app.use('/api/auth', authRoute);
+app.use('/api/user', userRoute);
+app.use('/api/message', messageRoute);
 
+// CHECK FOR WORNG URL
 app.all('*', (req, res, next) => {
     try {
-        throw new Error(`Can't fetch ${req.originalUrl}`);
+       return res.status(500).json(`Can't fetch ${req.originalUrl}`);
     } catch (err) {
         res.status(400).json({
             message: err.message,
