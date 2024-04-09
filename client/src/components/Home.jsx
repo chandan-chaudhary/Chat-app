@@ -12,7 +12,7 @@ export default function Home (){
         <div className="flex bg-slate-200 h-screen">
             <Sidebar/>
             <MessageView/>
-            <Profile/>
+            {/* <Profile/> */}
         </div>
     );
 };
