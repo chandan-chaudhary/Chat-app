@@ -1,12 +1,13 @@
 
 // import './App.css';
 import Home from "./components/Home";
+import {Toaster} from 'react-hot-toast';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
 function App() {
-    const user = true;
+    const user = false;
   return (
       <BrowserRouter>
         <Routes>
@@ -14,6 +15,7 @@ function App() {
           <Route path={'/login'} element={user ? <Home /> : <Login />}/>
           <Route path={'/register'} element={user ? <Home /> : <Register />}/>
         </Routes>
+       < Toaster />
       </BrowserRouter>
   );
 }

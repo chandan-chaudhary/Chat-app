@@ -26,6 +26,7 @@ const createToken = (id, res) => {
 exports.registerUser = async(req, res)=> {
     try {
         const {name, email, password,confirmPassword} =req.body;
+        console.log(password , confirmPassword);
         // confirm password
         if(password !== confirmPassword) return res.status(404).json({error:`Password didn't match!`});
         // check user already exist
@@ -45,7 +46,7 @@ exports.registerUser = async(req, res)=> {
         // send response
         res.status(201).json({user, token: token});
     } catch (err) {
-        res.status(404).json({error: err.message});
+        res.status(404).json({error: err});
     };
 };
 

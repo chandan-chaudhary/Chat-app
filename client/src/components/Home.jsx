@@ -5,13 +5,16 @@ import Sidebar from "./Sidebar";
 import Profile from "./Profile";
 import MessageView from "./MessageView";
 import search from '../public/search.png';
+import NoChat from "./NoChat";
 
 
 export default function Home (){
+
+    const chatSelected = true;
     return (
-        <div className="flex bg-slate-200 h-screen">
+        <div className="flex bg-slate-200 h-screen text-black">
             <Sidebar/>
-            <MessageView/>
+            {chatSelected ? <NoChat /> : <MessageView/> }
             <Profile/>
         </div>
     );
