@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import {Link} from "react-router-dom";
 import axios from 'axios';
-import {useDispatch, useSelector} from 'react-redux';
-import { processStart, processSuccess } from "../redux/userSlice";
+import {useDispatch} from 'react-redux';
+import { processStart, processSuccess, processError } from "../redux/userSlice";
 
 export default function Register() {
     const [inputs, setInputs] = useState({
@@ -17,13 +17,14 @@ export default function Register() {
      const handleSignup= async(e)=>{
         e.preventDefault();
         try{
+            dispatch(processStart());
             if(!inputs.name || !inputs.email || !inputs.password || !inputs.confirmPassword){
                 return toast.error('Missing Inputs');
             }
             if(inputs.password !== inputs.confirmPassword){
                 return toast.error(`Password didn't match`);
             }
-            console.log(inputs.password, inputs.confirmpassword);
+            console.log(inputs.password, inputs.confirmPassword);
             const register = await axios.post('http://127.0.0.1:5500/api/auth/register',{
                 name:inputs.name, email:inputs.email, password: inputs.password, confirmPassword:inputs.confirmPassword,
             });
@@ -34,7 +35,8 @@ export default function Register() {
 
         }catch(err){
             console.log(err);
-            toast.error(err.message);
+            toast.error(err.response.data.error);
+            dispatch(processError(err.response.data.error));
         }
      };
 
@@ -49,7 +51,7 @@ export default function Register() {
                     <input className={'px-1 pl-2 italic rounded-sm bg-slate-200'} type={'text'} name={'name'}
                            placeholder={'Your Name'} value={inputs.name} onChange={(e)=>setInputs({...inputs, name: e.target.value})}/>
                     <label className={'font-bold'} htmlFor={'usernameText'}>Email</label>
-                    <input className={'px-1 pl-2 italic rounded-sm bg-slate-200'} type={'text'} name={'email'}
+                    <input className={'px-1 pl-2 italic rounded-sm bg-slate-200'} type={'email'} name={'email'}
                      placeholder={'Your Email'} value={inputs.email} onChange={(e)=> setInputs({...inputs, email:e.target.value})}/>
                     <label className={'font-bold '} htmlFor={'passwordText'}>Password</label>
                     <input className={'px-1 pl-2 italic rounded-sm bg-slate-200'} type={'password'}

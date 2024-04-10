@@ -4,8 +4,9 @@ import {createSlice}  from '@reduxjs/toolkit';
 const userSlice = createSlice({
     name: 'user',
     initialState:{
-     user: {},
+     userData: {},
      processStart: false,
+     processError: '',
     },
 
     reducers:{
@@ -14,11 +15,17 @@ const userSlice = createSlice({
         },
         processSuccess: (state, action)=>{
             state.processStart = false;
-            state.user = action.payload;
+            state.userData = action.payload;
         },
-       
+        processError: (state, action)=>{
+            state.processStart = false;
+            state.processError  = action.payload;
+        },
+        logout: (state, action) =>{
+            return {};
+        }
     }
 });
 
-export const {processStart, processSuccess} = userSlice.actions;
+export const {processStart, processSuccess, processError, logout} = userSlice.actions;
 export default userSlice.reducer; 
