@@ -5,6 +5,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState:{
      userData: {},
+     allUsers:[],
      processStart: false,
      processError: '',
     },
@@ -21,11 +22,14 @@ const userSlice = createSlice({
             state.processStart = false;
             state.processError  = action.payload;
         },
+        addAllUser : (state, action)=>{
+            state.allUsers = action.payload;
+        },
         logout: (state, action) =>{
             return {};
         }
     }
 });
 
-export const {processStart, processSuccess, processError, logout} = userSlice.actions;
+export const {processStart, processSuccess, processError,addAllUser, logout} = userSlice.actions;
 export default userSlice.reducer; 

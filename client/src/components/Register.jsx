@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import { processStart, processSuccess, processError } from "../redux/userSlice";
 
 export default function Register() {
+    const [loading, setLoading] = useState(false);
     const [inputs, setInputs] = useState({
         name: '',
         email: '',
@@ -16,6 +17,7 @@ export default function Register() {
 
      const handleSignup= async(e)=>{
         e.preventDefault();
+        setLoading(true);
         try{
             dispatch(processStart());
             if(!inputs.name || !inputs.email || !inputs.password || !inputs.confirmPassword){
@@ -37,15 +39,17 @@ export default function Register() {
             console.log(err);
             toast.error(err.response.data.error);
             dispatch(processError(err.response.data.error));
+        } finally {
+            setLoading(false);
         }
      };
 
 
 
     return (
-        <div className={'flex flex-col justify-center h-screen bg-slate-300 items-center text-black'}>
+        <div className={'flex flex-col justify-center h-screen bg-gradient-to-r from-purple-400 to-pink-400 items-center text-black'}>
             <h1 className={'p-4 font-bold text-2xl underline'}>SIGN UP</h1>
-            <div className={'flex flex-col justify-center bg-slate-400 p-20 rounded-lg items-center'}>
+            <div className={'flex flex-col justify-center  bg-fuchsia-300 p-20 rounded-lg items-center'}>
                 <form className={'flex flex-col space-y-1'} onSubmit={handleSignup}>
                     <label className={'font-bold'} htmlFor={'name'}>Name</label>
                     <input className={'px-1 pl-2 italic rounded-sm bg-slate-200'} type={'text'} name={'name'}
@@ -59,7 +63,8 @@ export default function Register() {
                     <label className={'font-bold '} htmlFor={'confirmPasswordText'}>Confirm Password</label>
                     <input className={'px-1  pl-2 italic rounded-sm bg-slate-200'} type={'password'}
                            name={'confirmPasswordText'} placeholder={'password'} value={inputs.confirmPassword} onChange={(e)=> setInputs({...inputs, confirmPassword:e.target.value})}/>
-                    <button className={' font-bold bg-slate-300 m-5 mt-5 rounded-full'}>Register</button>
+                    <button className={' font-bold bg-slate-300 m-5 mt-5 rounded-full'} disabled={loading}>
+                        {loading ? <span className="loading loading-dots loading-lg"></span> : "Register" }</button>
                 </form>
                 <span className={'underline p-4 hover:cursor-pointer '}>forgot password?</span>
                 <Link to={'/login'}>

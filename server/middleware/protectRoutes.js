@@ -6,7 +6,9 @@ const User = require('../models/userModel');
 exports.protectRoute = async (req, res, next)=>{
     try{
         // collect token
-        const token = req.cookies.jwt || req.headers.Authorization;
+        // console.log("protect", req.headers);
+        const token = (req.headers.authorization?.startsWith('Bearer')? req.headers.authorization.split(' ')[1] : undefined)||( req.cookies.jwt);
+        // console.log('protectu',token);
         if(!token) return res.status(401).json({error:'Unauthorized- token expired'});
 
         // verify token
