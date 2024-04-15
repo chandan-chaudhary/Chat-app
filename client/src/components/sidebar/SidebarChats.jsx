@@ -30,15 +30,15 @@ export default function ChatBox() {
         // console.log('chatbox',chats.data);
       } catch (err) {
         console.log(err);
-        toast.error(err.response.data.error);
+        toast.error(err.message);
       } finally {
         setLoading(false);
       }
     };
     handleChatUser();
-  },[user.token]);
+  },[user.token, dispatch]);
 
-  console.log('chatbox',users);
+  // console.log('chatbox',users);
   return (
     <div className={"max-h-96 p-2 mt-3  overflow-auto"}>
       {loading ?  <span className="loading loading-spinner loading-md"></span>

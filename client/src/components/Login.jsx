@@ -36,7 +36,7 @@ export default function Login(){
             const loginUser = await axios.post('http://127.0.0.1:5500/api/auth/login',{
                 email:inputs.email, password:inputs.password
             });
-            console.log('login',loginUser);
+            // console.log('login',loginUser);
             dispatch(processSuccess(loginUser.data));
             toast.success(loginUser.data.user.name +' logged');
         }catch(err){

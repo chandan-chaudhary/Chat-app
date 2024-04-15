@@ -10,6 +10,8 @@ exports.sendMessage = async(req, res)=>{
         const {message} = req.body;
         const {id : receiver} = req.params;
         const sender = req.user._id;
+
+        if(!message) return res.status(404).json({error: 'please type to send message'});
         // FIND CONVERSATION IN DBs
         let conversation =
             await Conversation.findOne({participants:{ $all: [receiver, sender]}});
@@ -44,7 +46,7 @@ exports.getMessage = async (req, res )=>{
         const conversation = await Conversation.findOne({participants: {$all :[receiver, sender]}}).populate('messages');
 
         // RETURN EMPTY CONVERSATION
-        if(!conversation) res.status(200).json([]);
+        if(!conversation) return res.status(200).json([]);
         res.status(200).json(conversation.messages);
     }catch(err){
         res.status(404).json({error: err.message});

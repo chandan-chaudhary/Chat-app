@@ -18,10 +18,10 @@ export default function SideMenu() {
         setShowComp(input);
     }
  }
- console.log('show',showComp);
+//  console.log('show',showComp);
    
   return (
-    <div className='mt-5 max-h-screen'>
+    <div className='mt-5 h-full'>
         <div className={'bg-gradient-to-r from-pruple-300 to-pink-400 rounded-xl '}>
                 <div role="tablist" className="font-bold tabs tabs-lifted">
                     <span role="tab" className={`tab ${showComp ==='chat' ?  'tab-active' : 'text-black' }`} onClick={()=>handleComponent('chat')}>Chats</span>

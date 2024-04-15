@@ -32,7 +32,7 @@ export default function Register() {
             });
             dispatch(processSuccess(register.data))
             toast.success('register success')
-            console.log(register.data);
+            // console.log(register.data);
             register.data && window.location.replace('/')
 
         }catch(err){

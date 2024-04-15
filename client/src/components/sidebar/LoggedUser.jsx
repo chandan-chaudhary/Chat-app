@@ -14,7 +14,7 @@ function LoggedUser() {
                 dispatch(processStart())
                 const logoutUser = await axios.post('http://127.0.0.1:5500/api/auth/logout');
                 dispatch(logout());
-                console.log(logoutUser);
+                // console.log(logoutUser);
                 toast.success(logoutUser.data.message);
             }catch(err){
                 console.log(err);
