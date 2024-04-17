@@ -19,7 +19,7 @@ export default function Home (){
     },[setSelectedConversation]);
 
     return (
-        <div className="flex bg-gradient-to-r from-purple-400 to-pink-400 max-h-screen text-black">
+        <div className="flex bg-gradient-to-r from-purple-400 to-pink-400 min-h-screen text-black">
             <Sidebar/>
             {selectedConversation ? <MessageView/> : <NoChat /> }
             <Profile/>

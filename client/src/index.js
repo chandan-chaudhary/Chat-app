@@ -8,15 +8,18 @@ import { PersistGate } from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 
 import reportWebVitals from './reportWebVitals';
+import { SocketProvider } from './SocketContext';
 
 const persistor = persistStore(store);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-    <App />
-    </PersistGate>
+     <PersistGate loading={null} persistor={persistor}>
+        <SocketProvider>
+          <App />
+        </SocketProvider>
+     </PersistGate>
     </Provider>
   </React.StrictMode>
 );

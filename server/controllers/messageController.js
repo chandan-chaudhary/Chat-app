@@ -2,6 +2,8 @@
 
 const Conversation = require('../models/conversationModel');
 const Message = require('../models/messageModel');
+const getReceiverSocketId = require('../app');
+const io = require('../app');
 
 // SEND MESSSAGE
 exports.sendMessage = async(req, res)=>{
@@ -25,11 +27,15 @@ exports.sendMessage = async(req, res)=>{
         if(newMessage){
             conversation.messages.push(newMessage._id);
         }
-        // SOCKET IO IMPLEMENTATION
-
-
         //  save message in conversation DBs
         await conversation.save();
+
+        // SOCKET IO IMPLEMENTATION
+        const receiverSocketId = getReceiverSocketId(receiver);
+        console.log(receiverSocketId);
+        if(receiverSocketId){
+            io.to(receiverSocketId).emit('newMessage', newMessage);
+        }
         //SEND RESPONSE
         res.status(201).json(newMessage);
     }catch (err){

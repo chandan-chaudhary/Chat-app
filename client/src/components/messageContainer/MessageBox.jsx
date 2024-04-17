@@ -1,15 +1,23 @@
-import React ,{useEffect, useState} from "react";
+import React ,{useEffect, useRef, useState} from "react";
 import { useSelector } from "react-redux";
 import useConversation from "../../utils/conversation";
-
 import Message from "./Message";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useSocketContext } from "../../SocketContext";
 
 export default function MessageBox(){
     const [loading, setLoading] = useState(false);
     const {messages,setMessages, selectedConversation} =useConversation();
+    const {socket} = useSocketContext();
     const user = useSelector((state)=> state.user.userData);
+    const lastmsgRef = useRef();
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            lastmsgRef.current?.scrollIntoView({behaviour: 'smooth'});
+        }, 100)
+    }, [messages]);
 
 
     useEffect(()=>{
@@ -40,11 +48,16 @@ export default function MessageBox(){
         getMessages();
     },[selectedConversation, setMessages, user.token]);
 
-    
+    useEffect(()=>{
+        socket?.on('newMessage', (message)=>{
+            setMessages([...messages, message]);
+        });
+        return ()=> socket?.off('newMessage')
+    }, [messages, setMessages, socket])
 
     
     return(
-        <div id="autoScroll" className={'flex flex-col px-2 overflow-auto'}>
+        <div id="autoScroll" className={'flex flex-col px-2 overflow-auto'} ref={lastmsgRef}>
             { loading && ( <div className="flex justify-center items-center "> 
                         <span className="loading loading-ball loading-xs"></span>
                         <span className="loading loading-ball loading-sm"></span>

@@ -21,7 +21,7 @@ export default function ChatBox() {
       try {
         const chats = await axios.get('http://127.0.0.1:5500/api/user/',{
           headers:{
-            Authorization : `Bearer ${user.token}`
+            Authorization : `Bearer ${user.token}`,
           }
         });
         // const chat = await chats.json();
