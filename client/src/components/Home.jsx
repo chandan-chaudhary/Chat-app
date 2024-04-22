@@ -1,20 +1,27 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
-// import Login from "./Login";
 import Profile from "./Profile";
 import MessageView from "./MessageView";
-import search from '../public/search.png';
 import NoChat from "./NoChat";
+import useConversation from "../utils/conversation";
+
 
 
 export default function Home (){
+    const {selectedConversation, setSelectedConversation} = useConversation();
 
-    const chatSelected = true;
+
+
+
+    useEffect(()=>{
+        return  ()=> setSelectedConversation(null);
+    },[setSelectedConversation]);
+
     return (
-        <div className="flex bg-slate-200 h-screen text-black">
+        <div className="flex bg-gradient-to-r from-purple-400 to-pink-400 min-h-screen text-black">
             <Sidebar/>
-            {chatSelected ? <NoChat /> : <MessageView/> }
+            {selectedConversation ? <MessageView/> : <NoChat /> }
             <Profile/>
         </div>
     );

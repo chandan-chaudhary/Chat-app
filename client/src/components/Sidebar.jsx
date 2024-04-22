@@ -4,7 +4,7 @@ import SideMenu from "./sidebar/SideMenu";
 
 export default function Sidebar (){
     return (
-        <div className="basis-3/12 border-r-3 border-slate-600  p-4">
+        <div className=" basis-3/12 max-w-screen flex flex-col border-r-3 border-slate-600  p-4">
             <SearchInput />
            <SideMenu />
         </div>
